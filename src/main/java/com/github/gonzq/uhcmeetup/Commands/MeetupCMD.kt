@@ -16,7 +16,7 @@ class MeetupCMD: CommandExecutor, TabExecutor {
         pl.getCommand("uhcmeetup")!!.setExecutor(this)
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args!!.isEmpty()) {
             sender.sendMessage(Utils.chat("&b&lUHC Meetup"));
             sender.sendMessage(Utils.chat("&fAuthor: &b! Gonzq#4451 and Lavainmc"));
@@ -54,13 +54,12 @@ class MeetupCMD: CommandExecutor, TabExecutor {
         sender: CommandSender,
         command: Command,
         alias: String,
-        args: Array<out String>?): MutableList<String>? {
+        args: Array<out String>): MutableList<String> {
         val list = mutableListOf<String>()
-        if (args!!.size == 1 && sender.hasPermission("meetup.admin")) {
+        if (args.size == 1 && sender.hasPermission("meetup.admin")) {
             list.add("setlobby")
             list.add("reload")
-            return list
         }
-        return null
+        return list
     }
 }

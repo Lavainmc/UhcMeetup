@@ -13,7 +13,7 @@ class KtCMD: CommandExecutor {
         pl.getCommand("kt")!!.setExecutor(this)
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         val hash = mutableMapOf<String, Int>()
         pl.pm.getPlayerList().forEach { p -> hash[p.name] = p.getKills() }
         val entry = hash.entries.stream().sorted(java.util.Map.Entry.comparingByValue(Comparator.reverseOrder()))

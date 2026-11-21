@@ -26,7 +26,6 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
-import java.util.Objects
 
 class HubListener: Listener {
     private val pl = UhcMeetup.pl
@@ -117,9 +116,9 @@ class HubListener: Listener {
         if (game.getState() == GameState.STARTED) {
             if (p.isPlaying()) {
                 p.setState(PlayerState.SPECTATING)
-                player.inventory.contents.filter(Objects::nonNull).filter{a -> a.type != Material.AIR}
+                player.inventory.contents.filterNotNull().filter{a -> a.type != Material.AIR}
                     .forEach{a -> player.world.dropItemNaturally(player.location, a)}
-                player.inventory.armorContents.filter(Objects::nonNull).filter {a -> a.type != Material.AIR}
+                player.inventory.armorContents.filterNotNull().filter {a -> a.type != Material.AIR}
                     .forEach{a -> player.world.dropItemNaturally(player.location, a)}
                 val offHand = player.inventory.itemInOffHand
                 if (offHand.type != Material.AIR) player.world.dropItemNaturally(player.location, offHand)

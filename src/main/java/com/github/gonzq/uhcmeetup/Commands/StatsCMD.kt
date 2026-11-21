@@ -18,7 +18,7 @@ class StatsCMD: CommandExecutor {
         pl.getCommand("stats")!!.setExecutor(this)
     }
 
-    override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<out String>): Boolean {
         if (sender is Player) {
             when (cmd.name) {
                 "topstats" -> TopStatsGui(sender).open(sender)
