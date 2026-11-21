@@ -7,11 +7,9 @@ import com.github.gonzq.uhcmeetup.Utils.Utils
 import org.bukkit.Bukkit
 import kotlin.streams.toList
 
-class VoteManager {
+class VoteManager(private val pl: UhcMeetup, private val scen: ScenarioManager) {
     val scensToVote = mutableMapOf<Scenario, Int>()
     private var canVote = false
-    private val pl = UhcMeetup.pl
-    private val scen = ScenarioManager.getInstance()
 
     init {
         pl.config.getConfig().getStringList("vote-system.scenarios-to-vote").forEach {s ->

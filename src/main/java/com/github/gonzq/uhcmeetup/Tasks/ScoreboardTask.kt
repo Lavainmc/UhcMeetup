@@ -22,7 +22,7 @@ class ScoreboardTask: BukkitRunnable() {
     override fun run() {
         pl.boards.values.forEach {f ->
             f.updateTitle(Utils.chat(pl.board.getConfig().getString("scoreboard.title")))
-            val lines: List<String> = when (GameManager.getInstance().getState()) {
+            val lines: List<String> = when (UhcMeetup.pl.game.getState()) {
                 GameState.WAITING -> pl.board.getConfig().getStringList("scoreboard.lobby")
                 GameState.STARTING -> pl.board.getConfig().getStringList("scoreboard.starting")
                 GameState.STARTED -> pl.board.getConfig().getStringList("scoreboard.started")
@@ -43,10 +43,10 @@ class ScoreboardTask: BukkitRunnable() {
 
     private fun replace(player: Player, line: String): String {
         var l = line
-        val game = GameManager.getInstance()
-        val wm = WorldManager.getInstance()
+        val game = UhcMeetup.pl.game
+        val wm = UhcMeetup.pl.world
         val pm = pl.pm
-        val scen = ScenarioManager.getInstance()
+        val scen = UhcMeetup.pl.scenarios
         val p = pm.getUhcPlayer(player)
         val key = "%meetup_"
         if (line.contains(key + "border%")) l = l.replace(key + "border%", "${wm.getBorder()}")

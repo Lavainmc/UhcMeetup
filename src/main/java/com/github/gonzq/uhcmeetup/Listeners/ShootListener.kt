@@ -18,7 +18,7 @@ class ShootListener: Listener {
     @EventHandler
     fun onShoot(e: EntityShootBowEvent) {
         val ent = e.entity
-        if (GameManager.getInstance().getState() == GameState.STARTED &&
+        if (UhcMeetup.pl.game.getState() == GameState.STARTED &&
                 ent is Player) {
             StatsManager.getInstance().add(pl.pm.getUhcPlayer(ent), StatsManager.Stats.BOW_SHOOTS)
         }

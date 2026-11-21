@@ -33,7 +33,7 @@ class MeetupCMD: CommandExecutor, TabExecutor {
                 }
                 "setlobby" -> {
                     if (sender is Player) run {
-                        WorldManager.getInstance().setLobbyLocation(sender.location)
+                        UhcMeetup.pl.world.setLobbyLocation(sender.location)
                         sender.sendMessage(Utils.chat("${pl.prefix}&aLobby has been setted."))
                     }
                 }

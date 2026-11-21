@@ -14,8 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class InteractListener: Listener {
     private val pl = UhcMeetup.pl
-    private val world = WorldManager.getInstance()
-    private val game = GameManager.getInstance()
+    private val world = UhcMeetup.pl.world
+    private val game = UhcMeetup.pl.game
 
     init {
         pl.server.pluginManager.registerEvents(this,pl)

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
 
 class VoteGui: FastInv(18, Utils.chat(UhcMeetup.pl.lang.getConfig().getString("vote-gui-title"))) {
     private val pl = UhcMeetup.pl
-    private val game = GameManager.getInstance()
+    private val game = UhcMeetup.pl.game
 
     init {
         game.getVoteScenarios().scensToVote.keys.forEach{scen ->

@@ -28,8 +28,8 @@ class Placeholders: PlaceholderExpansion() {
     }
 
     override fun onPlaceholderRequest(player: Player, identifier: String): String {
-        val game = GameManager.getInstance()
-        val wm = WorldManager.getInstance()
+        val game = UhcMeetup.pl.game
+        val wm = UhcMeetup.pl.world
         val pm = pl.pm;
         val p = pm.getUhcPlayer(player)
         val stats = StatsManager.getInstance()

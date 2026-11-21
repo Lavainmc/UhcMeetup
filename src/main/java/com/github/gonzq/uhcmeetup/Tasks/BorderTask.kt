@@ -14,20 +14,20 @@ class BorderTask: BukkitRunnable() {
     private var pl = UhcMeetup.pl
     private var time = 600
     private var wtime = pl.config.getConfig().getInt("worldborder-time")
-    private var game = GameManager.getInstance()
+    private var game = UhcMeetup.pl.game
 
 
     override fun run() {
         if (time == 600) Bukkit.broadcastMessage(Utils.chat(pl.borderPrefix + pl.lang.getConfig().getString("border-shrink-one-minute")))
         if (time == 540) {
             Bukkit.broadcastMessage(Utils.chat(pl.borderPrefix + pl.lang.getConfig().getString("border-shrink")))
-            WorldManager.getInstance().getMeetupWorld()!!.worldBorder.setSize(20.0, wtime.toLong())
+            UhcMeetup.pl.world.getMeetupWorld()!!.worldBorder.setSize(20.0, wtime.toLong())
             BorderActionTask().runTaskTimer(pl,0,20)
             cancel()
         }
         if (time == 0) {
             Bukkit.broadcastMessage(Utils.chat(pl.borderPrefix + pl.lang.getConfig().getString("border-shrink")))
-            WorldManager.getInstance().getMeetupWorld()!!.worldBorder.setSize(4.0, 30)
+            UhcMeetup.pl.world.getMeetupWorld()!!.worldBorder.setSize(4.0, 30)
             BorderActionTask().runTaskTimer(pl,0,20)
             cancel()
         }

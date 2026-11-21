@@ -4,23 +4,15 @@ import com.github.gonzq.uhcmeetup.Scenarios.Scenario
 import com.github.gonzq.uhcmeetup.Scenarios.Types.*
 import com.github.gonzq.uhcmeetup.UhcMeetup
 
-class ScenarioManager {
+class ScenarioManager(private val pl: UhcMeetup) {
     private val scenarios = mutableSetOf<Scenario>()
 
-    companion object {
-        private val manager = ScenarioManager()
-        fun getInstance(): ScenarioManager {
-            return manager
-        }
-    }
-
     fun setup() {
-        val pl = UhcMeetup.pl
         scenarios.add(GoldenHeadDorp())
         scenarios.add(ValueDorp())
         scenarios.add(OldSmithing())
         scenarios.add(NoClean(pl, pl.config.getConfig().getInt("noclean-time")))
-        GameManager.getInstance().getVoteScenarios()
+        pl.game.getVoteScenarios()
     }
 
     fun getScenario(name: String): Scenario? {

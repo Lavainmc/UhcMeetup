@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable
 class BorderActionTask: BukkitRunnable() {
     private var pl = UhcMeetup.pl
     private var msg = pl.lang.getConfig().getString("border-actionbar")!!
-    private var game = GameManager.getInstance()
+    private var game = UhcMeetup.pl.game
 
 
     override fun run() {
@@ -21,7 +21,7 @@ class BorderActionTask: BukkitRunnable() {
         pl.pm.getPlayerList().stream().filter(GamePlayer::isOnline).forEach { p ->
             p.getPlayer()!!.spigot().sendMessage(ChatMessageType.ACTION_BAR,
             TextComponent(Utils.chat(msg.replace("%prefix%", pl.borderPrefix)
-                .replace("%size%", "${WorldManager.getInstance().getBorder()}"))))
+                .replace("%size%", "${UhcMeetup.pl.world.getBorder()}"))))
             if (game.getState() == GameState.FINALIZED) cancel()
         }
     }

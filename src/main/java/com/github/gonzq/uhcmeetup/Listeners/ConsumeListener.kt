@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffectType
 
 class ConsumeListener: Listener {
     private val pl = UhcMeetup.pl
-    private val game = GameManager.getInstance()
+    private val game = UhcMeetup.pl.game
 
     init {
         pl.server.pluginManager.registerEvents(this,pl)

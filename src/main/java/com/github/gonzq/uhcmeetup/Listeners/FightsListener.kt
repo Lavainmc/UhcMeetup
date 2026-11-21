@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 
 class FightsListener: Listener {
     private val pl = UhcMeetup.pl
-    private val game = GameManager.getInstance()
+    private val game = UhcMeetup.pl.game
     private val msg = pl.lang.getConfig().getString("arrow-damage")!!
 
     init {

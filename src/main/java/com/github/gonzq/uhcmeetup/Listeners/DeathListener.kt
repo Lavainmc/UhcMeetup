@@ -17,8 +17,8 @@ import org.bukkit.event.player.PlayerRespawnEvent
 
 class DeathListener: Listener {
     private val pl = UhcMeetup.pl
-    private val game = GameManager.getInstance()
-    private val world = WorldManager.getInstance()
+    private val game = UhcMeetup.pl.game
+    private val world = UhcMeetup.pl.world
 
     init {
         pl.server.pluginManager.registerEvents(this, pl)

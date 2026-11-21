@@ -6,20 +6,16 @@ import com.github.gonzq.uhcmeetup.Tasks.CountdownTask
 import com.github.gonzq.uhcmeetup.UhcMeetup
 import com.github.gonzq.uhcmeetup.Utils.Utils
 
-open class GameManager {
-    private var pl: UhcMeetup = UhcMeetup.pl
+/**
+ * State of one match. Owned by the plugin instead of a static singleton, so a
+ * second match can exist later without sharing counters or state.
+ */
+open class GameManager(private val pl: UhcMeetup) {
+
     private var voteScenarios: VoteManager? = null
 
-
-    companion object {
-        private val instance = GameManager()
-        fun getInstance(): GameManager {
-            return instance
-        }
-    }
-
     fun getVoteScenarios(): VoteManager {
-        if (voteScenarios == null) voteScenarios = VoteManager()
+        if (voteScenarios == null) voteScenarios = VoteManager(pl, pl.scenarios)
         return voteScenarios!!
     }
 
@@ -49,7 +45,7 @@ open class GameManager {
     fun start() {
         pl.pm.getPlayerList().stream().filter(GamePlayer::isOnline).forEach{p ->
             Utils.delay(5) {
-                ScatterManager.getInstance().scatter(p)
+                pl.scatter.scatter(p)
                 p.getPlayer()!!.isInvulnerable = true
             }
         }

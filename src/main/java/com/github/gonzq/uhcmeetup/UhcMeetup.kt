@@ -1,9 +1,12 @@
 package com.github.gonzq.uhcmeetup
 
 import com.github.gonzq.uhcmeetup.File.CFiles
-import com.github.gonzq.uhcmeetup.Managers.StatsManager
+import com.github.gonzq.uhcmeetup.Managers.GameManager
 import com.github.gonzq.uhcmeetup.Managers.PlayerManager
+import com.github.gonzq.uhcmeetup.Managers.ScatterManager
+import com.github.gonzq.uhcmeetup.Managers.ScenarioManager
 import com.github.gonzq.uhcmeetup.Managers.SlimeWorldSupport
+import com.github.gonzq.uhcmeetup.Managers.StatsManager
 import com.github.gonzq.uhcmeetup.Managers.WorldManager
 import com.github.gonzq.uhcmeetup.Tasks.ScoreboardTask
 import com.github.gonzq.uhcmeetup.Utils.MySqlUtils
@@ -26,7 +29,13 @@ class UhcMeetup : JavaPlugin() {
     lateinit var lang: CFiles
     lateinit var databases: CFiles
 
+    // Per-match state. Owned here (not in static singletons) so that
+    // several matches can coexist once rooms are introduced.
     lateinit var pm: PlayerManager
+    lateinit var game: GameManager
+    lateinit var world: WorldManager
+    lateinit var scenarios: ScenarioManager
+    lateinit var scatter: ScatterManager
 
     lateinit var prefix: String
     lateinit var borderPrefix: String
@@ -52,12 +61,18 @@ class UhcMeetup : JavaPlugin() {
         isMysql = databases.getConfig().getBoolean("databases.mysql.enable")
         prefix = Utils.chat(lang.getConfig().getString("prefix"))
         borderPrefix = Utils.chat(lang.getConfig().getString("border-prefix"))
+        // StatsManager stays a singleton on purpose: player statistics are
+        // shared across matches, they are not part of a single game.
         StatsManager.getInstance().setUpStats()
-        pm = PlayerManager()
+        pm = PlayerManager(this)
+        world = WorldManager(this)
+        scenarios = ScenarioManager(this)
+        scatter = ScatterManager(this)
+        game = GameManager(this)
         FastInvManager.register(this)
         logger.info("[worlds] " + SlimeWorldSupport.status)
-        WorldManager.getInstance().deleteWorld()
-        WorldManager.getInstance().createWorlds()
+        world.deleteWorld()
+        world.createWorlds()
 
         ScoreboardTask().runTaskTimer(this,0,20)
 
@@ -83,7 +98,7 @@ class UhcMeetup : JavaPlugin() {
             }
         }
         Bukkit.getScoreboardManager()!!.mainScoreboard.objectives.forEach(Objective::unregister)
-        WorldManager.getInstance().deleteWorld()
+        world.deleteWorld()
         StatsManager.getInstance().saveStats()
         if (isMysql) {
             mysql.disconnect()

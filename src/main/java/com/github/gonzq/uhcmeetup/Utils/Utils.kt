@@ -98,7 +98,7 @@ open class Utils {
 
         fun registerAll() {
             val pl = UhcMeetup.pl
-            val scen = ScenarioManager.getInstance()
+            val scen = UhcMeetup.pl.scenarios
             scen.setup()
             pl.config.getConfig().getStringList("default-scenarios-enabled").forEach { s ->
                 scen.getScenario(s)?.enable()

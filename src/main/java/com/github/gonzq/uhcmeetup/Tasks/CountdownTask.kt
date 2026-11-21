@@ -18,7 +18,7 @@ class CountdownTask: BukkitRunnable() {
     private var msg = pl.lang.getConfig().getString("countdown-msg")!!
     private var votemsg = pl.lang.getConfig().getString("vote-msg")!!
     private var vote = pl.config.getConfig().getBoolean("vote-system.scenario-system")
-    private var g = GameManager.getInstance()
+    private var g = UhcMeetup.pl.game
 
     override fun run() {
         if (g.getCountdown() == 60) {
@@ -79,7 +79,7 @@ class CountdownTask: BukkitRunnable() {
             }
 
             if (g.getCountdown() == 0) {
-                pl.pm.getPlayerList().stream().filter(GamePlayer::isOnline).forEach(ScatterManager.getInstance()::postScatter)
+                pl.pm.getPlayerList().stream().filter(GamePlayer::isOnline).forEach(UhcMeetup.pl.scatter::postScatter)
                 if (vote) g.getVoteScenarios().endVotes()
                 g.setState(GameState.STARTED)
                 BorderTask().runTaskTimer(pl,0,20)

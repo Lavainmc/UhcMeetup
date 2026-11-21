@@ -17,7 +17,7 @@ class VoteCMD: CommandExecutor {
 
     init {
         pl.getCommand("vote")!!.setExecutor(this)
-        vote = GameManager.getInstance().getVoteScenarios()
+        vote = UhcMeetup.pl.game.getVoteScenarios()
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

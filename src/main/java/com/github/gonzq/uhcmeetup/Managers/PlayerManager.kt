@@ -12,7 +12,7 @@ import java.util.*
 import java.util.stream.Collectors
 
 
-class PlayerManager {
+class PlayerManager(private val pl: UhcMeetup) {
 
     private var players: MutableList<GamePlayer> = mutableListOf()
 
@@ -81,13 +81,12 @@ class PlayerManager {
 
     // 游戏结束
     fun setAllPlayersEndGame() {
-        var manager = GameManager.getInstance()
+        val manager = pl.game
         val console = Bukkit.getServer().getConsoleSender()
         val winner = getWinner()
         val player = getPlayerList()
         val wintitle = "§b⚔ 胜利 ⚔"
         val winsubtitle = "§3你活到了最后!"
-        val pl = UhcMeetup.pl
         Bukkit.broadcastMessage(Utils.chat("§b§l游戏结束!"))
         Bukkit.broadcastMessage(Utils.chat(pl.prefix + pl.lang.getConfig().getString("win-solo")).replace("%player%", winner.name).replace("%kills%", "${winner.getKills()}"))
         StatsManager.getInstance().add(winner, StatsManager.Stats.WINS)

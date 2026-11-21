@@ -13,7 +13,7 @@ class ScenarioGui: FastInv(18, "条件") {
     private val pl = UhcMeetup.pl
 
     init {
-        ScenarioManager.getInstance().getScenarios().forEach { s ->
+        UhcMeetup.pl.scenarios.getScenarios().forEach { s ->
             addItem(
                 ItemBuilder(s.getIcon())
                     .name(Utils.chat(
@@ -21,17 +21,17 @@ class ScenarioGui: FastInv(18, "条件") {
                     ).lore(s.getDescription()).build()) { e ->
                 val p = e.whoClicked as Player
                 e.isCancelled = true
-                if (p.hasPermission("meetup.scenarios") && GameManager.getInstance().getState() != GameState.STARTED &&
-                        !GameManager.getInstance().getVoteScenarios().canVote()) {
+                if (p.hasPermission("meetup.scenarios") && UhcMeetup.pl.game.getState() != GameState.STARTED &&
+                        !UhcMeetup.pl.game.getVoteScenarios().canVote()) {
                     if (s.isEnabled()) {
                         s.disable()
                         if (pl.config.getConfig().getStringList("vote-system.scenarios-to-vote").contains(s.getName())) {
-                            GameManager.getInstance().getVoteScenarios().scensToVote[s] = 0
+                            UhcMeetup.pl.game.getVoteScenarios().scensToVote[s] = 0
                         }
                     } else {
                         s.enable()
                         if (pl.config.getConfig().getStringList("vote-system.scenarios-to-vote").contains(s.getName())) {
-                            GameManager.getInstance().getVoteScenarios().scensToVote.remove(s)
+                            UhcMeetup.pl.game.getVoteScenarios().scensToVote.remove(s)
                         }
                     }
                 }

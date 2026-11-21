@@ -29,10 +29,10 @@ import org.bukkit.event.player.PlayerRespawnEvent
 
 class HubListener: Listener {
     private val pl = UhcMeetup.pl
-    private val game = GameManager.getInstance()
-    private val scatter = ScatterManager.getInstance()
-    private val world = WorldManager.getInstance()
-    private val scen = ScenarioManager.getInstance()
+    private val game = UhcMeetup.pl.game
+    private val scatter = UhcMeetup.pl.scatter
+    private val world = UhcMeetup.pl.world
+    private val scen = UhcMeetup.pl.scenarios
 
     init {
         pl.server.pluginManager.registerEvents(this,pl)

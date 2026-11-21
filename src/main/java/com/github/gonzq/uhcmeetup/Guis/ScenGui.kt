@@ -9,7 +9,7 @@ import fr.mrmicky.fastinv.ItemBuilder
 class ScenGui: FastInv(18, "条件") {
 
     init {
-        ScenarioManager.getInstance().getEnabledScenarios().forEach {s ->
+        UhcMeetup.pl.scenarios.getEnabledScenarios().forEach {s ->
             addItem(ItemBuilder(s.getIcon()).name(Utils.chat(UhcMeetup.pl.config.getConfig().getString("scenarios-gui.scenarios-name")!!
                 .replace("%name%", s.getName()))).lore(s.getDescription()).build())
         }

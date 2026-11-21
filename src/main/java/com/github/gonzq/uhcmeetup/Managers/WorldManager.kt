@@ -6,17 +6,9 @@ import java.io.File
 import java.util.Arrays
 import java.util.Random
 
-class WorldManager {
-    private val pl = UhcMeetup.pl
+class WorldManager(private val pl: UhcMeetup) {
     private var borderCenterX: Double = 0.0
     private var borderCenterZ: Double = 0.0
-
-    companion object{
-       private val instance = WorldManager()
-        fun getInstance(): WorldManager {
-            return instance
-        }
-    }
 
     fun getMeetupWorld(): World? {
         return Bukkit.getWorld(pl.config.getConfig().getString("meetup-world")!!)

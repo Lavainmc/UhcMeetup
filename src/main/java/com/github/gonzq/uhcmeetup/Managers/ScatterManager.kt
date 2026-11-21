@@ -2,6 +2,7 @@ package com.github.gonzq.uhcmeetup.Managers
 
 import com.github.gonzq.uhcmeetup.Enums.PlayerState
 import com.github.gonzq.uhcmeetup.Players.GamePlayer
+import com.github.gonzq.uhcmeetup.UhcMeetup
 import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
@@ -12,15 +13,9 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.*
 
-class ScatterManager {
+class ScatterManager(private val pl: UhcMeetup) {
 
     companion object {
-        private var instance = ScatterManager()
-
-        fun getInstance(): ScatterManager {
-            return instance
-        }
-
         private val REPLACEABLE_MATERIALS: Set<Material> = setOf(
             Material.AIR,
             Material.WATER,
@@ -210,7 +205,7 @@ class ScatterManager {
     }
 
     private fun calculateCoords(): Location {
-        val wm = WorldManager.getInstance()
+        val wm = pl.world
         val rand = Random()
         val upperbound = wm.getBorder()
         var x = rand.nextInt(upperbound).toDouble() + 0.5
