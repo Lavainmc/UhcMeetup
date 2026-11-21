@@ -18,8 +18,6 @@ Fork From https://github.com/Gonzaa3007/UhcMeetup
 
 
 ## Commands
-`/vote`
-- Open the Vote GUI
 
 `/stats <player>`
 - See a player stats
