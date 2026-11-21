@@ -1,7 +1,7 @@
 
 ## UhcMeetup
 
-A very customizable UhcMeetup plugin for current Minecraft Versions!
+A customizable UhcMeetup plugin for Minecraft!
 
 Fork From https://github.com/Gonzaa3007/UhcMeetup
 
@@ -11,7 +11,6 @@ Fork From https://github.com/Gonzaa3007/UhcMeetup
 ## Features
 
 - MC Version: 1.21.11+
-- Plugin Version: 1.2
 - Stats & Leaderboard
 - MySQL compatibility
 - Customizable messages, config, scoreboard and kits
@@ -47,5 +46,9 @@ Fork From https://github.com/Gonzaa3007/UhcMeetup
 ## Author
 
 - [@! Gonzq](https://discord.com/users/411654061385842689)
+- 
+- [@! Lavainmc](https://github.com/Lavainmc)
+
+- [@! GordonHim](https://github.com/GordonHim)
 
 
