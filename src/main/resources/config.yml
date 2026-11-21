@@ -39,3 +39,16 @@ bungee-support:
   send-to-hub:
     enable: false
     server-name: lobby
+# Advanced Slime Paper (ASWM) integration.
+# ASP replaces the server jar (it is a Paper fork); when it is present the
+# lobby/meetup worlds are loaded from the slime data source instead of being
+# generated on the main thread, which removes the freeze at startup.
+# Worlds are looked up by the names above (lobby.name / meetup-world).
+slime-worlds:
+  enable: true
+  # Must match the file data source folder used by ASP (default: slime_worlds
+  # next to the server jar). Worlds are read as <folder>/<name>.slime
+  folder: slime_worlds
+  # Keep generated worlds between restarts. Set to true to delete the slime
+  # copy on shutdown so the next start generates a fresh world again.
+  delete-on-restart: false

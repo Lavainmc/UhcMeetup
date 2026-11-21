@@ -14,6 +14,10 @@ repositories {
         url = "https://repo.papermc.io/repository/maven-public/"
     }
     maven {
+        name = "infernalsuite"
+        url = "https://repo.infernalsuite.com/repository/maven-public/"
+    }
+    maven {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
@@ -32,6 +36,10 @@ dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.3'
+    // Advanced Slime Paper (ASWM). ASP is a Paper fork, not a plugin, so this
+    // is compileOnly and the code only touches it when the server provides it.
+    compileOnly 'com.infernalsuite.asp:api:4.1.0'
+    compileOnly 'com.infernalsuite.asp:file-loader:4.1.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation 'fr.mrmicky:fastboard:2.1.5'
     implementation 'fr.mrmicky:FastInv:3.0.3'

@@ -3,6 +3,7 @@ package com.github.gonzq.uhcmeetup
 import com.github.gonzq.uhcmeetup.File.CFiles
 import com.github.gonzq.uhcmeetup.Managers.StatsManager
 import com.github.gonzq.uhcmeetup.Managers.PlayerManager
+import com.github.gonzq.uhcmeetup.Managers.SlimeWorldSupport
 import com.github.gonzq.uhcmeetup.Managers.WorldManager
 import com.github.gonzq.uhcmeetup.Tasks.ScoreboardTask
 import com.github.gonzq.uhcmeetup.Utils.MySqlUtils
@@ -54,6 +55,7 @@ class UhcMeetup : JavaPlugin() {
         StatsManager.getInstance().setUpStats()
         pm = PlayerManager()
         FastInvManager.register(this)
+        logger.info("[worlds] " + SlimeWorldSupport.status)
         WorldManager.getInstance().deleteWorld()
         WorldManager.getInstance().createWorlds()
 
