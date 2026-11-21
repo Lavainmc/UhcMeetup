@@ -1,0 +1,126 @@
+package com.github.gonzq.uhcmeetup.Managers
+
+import com.github.gonzq.uhcmeetup.Enums.GameState
+import com.github.gonzq.uhcmeetup.Exceptions.GamePlayerDoesNotExistException
+import com.github.gonzq.uhcmeetup.Players.GamePlayer
+import com.github.gonzq.uhcmeetup.UhcMeetup
+import com.github.gonzq.uhcmeetup.Utils.Utils
+import org.bukkit.Bukkit
+import org.bukkit.Sound
+import org.bukkit.entity.Player
+import java.util.*
+import java.util.stream.Collectors
+
+
+class PlayerManager {
+
+    private var players: MutableList<GamePlayer> = mutableListOf()
+
+    private fun doesPlayerExist(p: Player): Boolean {
+        for (up in players) {
+            if (up.uid == p.uniqueId) return true
+        }
+      /*  try {
+            getUhcPlayer(p.uniqueId)
+            return true
+        } catch (e: GamePlayerDoesNotExistException) {
+            throw RuntimeException(e)
+        }*/
+        return false
+    }
+
+    fun getUhcPlayer(p: Player): GamePlayer {
+        try {
+            return getUhcPlayer(p.uniqueId)
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+    }
+
+    @Suppress("UNREACHABLE_CODE")
+    @Throws(GamePlayerDoesNotExistException::class)
+    fun getUhcPlayer(name: String): GamePlayer {
+        return players.filter { p -> p.name == name }[0]
+        throw GamePlayerDoesNotExistException(name)
+    }
+
+    @Suppress("UNREACHABLE_CODE")
+    @Throws(GamePlayerDoesNotExistException::class)
+    fun getUhcPlayer(uid: UUID): GamePlayer {
+        return players.filter { p -> p.uid == uid }[0]
+        throw GamePlayerDoesNotExistException(uid.toString())
+    }
+
+    fun getOrCreateGamePlayer(p: Player): GamePlayer {
+        if (doesPlayerExist(p)) return getUhcPlayer(p)
+        return newUhcPlayer(p)
+    }
+
+    @Synchronized
+    fun newUhcPlayer(p: Player): GamePlayer {
+        return newUhcPlayer(p.uniqueId, p.name)
+    }
+
+    @Synchronized
+    fun newUhcPlayer(uid: UUID, name: String): GamePlayer {
+        val newPlayer: GamePlayer = GamePlayer(uid,name)
+        players.add(newPlayer)
+        return newPlayer
+    }
+
+    @Synchronized
+    fun getPlayerList(): MutableList<GamePlayer> {
+        return players
+    }
+
+    fun getPlayingPlayers(): Set<GamePlayer> {
+        return players.stream()
+            .filter(GamePlayer::isPlaying)
+            .collect(Collectors.toSet())
+    }
+
+    // 游戏结束
+    fun setAllPlayersEndGame() {
+        var manager = GameManager.getInstance()
+        val console = Bukkit.getServer().getConsoleSender()
+        val winner = getWinner()
+        val player = getPlayerList()
+        val wintitle = "§b⚔ 胜利 ⚔"
+        val winsubtitle = "§3你活到了最后!"
+        val pl = UhcMeetup.pl
+        Bukkit.broadcastMessage(Utils.chat("§b§l游戏结束!"))
+        Bukkit.broadcastMessage(Utils.chat(pl.prefix + pl.lang.getConfig().getString("win-solo")).replace("%player%", winner.name).replace("%kills%", "${winner.getKills()}"))
+        StatsManager.getInstance().add(winner, StatsManager.Stats.WINS)
+        if (winner.isOnline())
+            winner.getPlayer()!!.sendTitle(wintitle, winsubtitle, 20, 200, 20)
+            winner.getPlayer()!!.health = 20.0
+            winner.getPlayer()!!.playSound(winner.getPlayer()!!.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f)
+            winner.getPlayer()!!.isFlying
+            winner.getPlayer()!!.inventory.clear()
+            winner.getPlayer()!!.isInvulnerable = true
+        manager.setState(GameState.FINALIZED)
+        pl.boards.values.forEach{f -> f.updateLines(mutableListOf())}
+        Bukkit.broadcastMessage(Utils.chat(pl.prefix + pl.lang.getConfig().getString("server-restart")!!
+            .replace("%time%", "${pl.config.getConfig().getInt("restart-countdown")}")))
+        Utils.delay(pl.config.getConfig().getInt("restart-countdown") * 20L) {
+            pl.server.spigot().restart()
+        }
+    }
+
+    fun getWinner(): GamePlayer {
+        return players.filter(GamePlayer::isPlaying)[0]
+    }
+
+    fun playerJoinsTheGame(p: Player): GamePlayer {
+        if (doesPlayerExist(p)) return getUhcPlayer(p)
+        return newUhcPlayer(p)
+    }
+
+    fun checkIfRemainingPlayers() {
+        var playingPlayers = 0
+        for (p in getPlayerList()) {
+            if (p.isPlaying()) playingPlayers++
+        }
+        if (playingPlayers <= 1 ) setAllPlayersEndGame()
+    }
+}

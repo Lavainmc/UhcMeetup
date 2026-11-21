@@ -1,0 +1,41 @@
+lobby:
+  name: lobby
+  location:
+    x: 0
+    y: 4
+    z: 1
+    yaw: 18.23252
+    pitch: 18.485735
+meetup-world: meetup
+vote-system:
+  scenario-system: false
+  scenarios-to-vote:
+    - "战后保护"
+    - "附加掉落"
+default-scenarios-enabled:
+  - "战后保护"
+  - "附加掉落"
+seed-list:
+  - 11071079617937
+  - -632446011456927
+  - 144845014575172
+  - -271973583926241
+  - 828786898008397
+  - 912216414204313
+  - 149829148888427
+  - 706625171064917
+  - 471484538450128
+worldborder-size: 400
+worldborder-time: 180
+players-to-start: 3
+countdown-time: 60
+finish-restart: true
+restart-countdown: 15
+shield-break-sound: false
+scenarios-gui:
+  scenarios-name: '&b%name%'
+noclean-time: 15
+bungee-support:
+  send-to-hub:
+    enable: false
+    server-name: lobby

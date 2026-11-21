@@ -1,0 +1,20 @@
+# Gradle
+.gradle/
+build/
+out/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Accidentally generated SSH key dumps - never commit a private key
+/git remote -v
+/git remote -v.pub
